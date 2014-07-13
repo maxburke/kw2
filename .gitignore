@@ -1,1 +1,4 @@
 *.swp
+*.o
+kobbweb_smtp
+kw2_smtp
