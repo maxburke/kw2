@@ -2,3 +2,8 @@
 *.o
 kobbweb_smtp
 kw2_smtp
+key_generator
+kw2/tools/key_generator/kw2_key.*
+kw2/tools/email/kw2_smtp.csr
+kw2/tools/email/kw2_smtp.crt
+kw2/tools/email/kw2_smtp.key*
