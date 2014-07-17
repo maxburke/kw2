@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <link href="/static/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="/static/kobbweb.css" media="all" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <script type="text/javascript" src="/static/json2.js"></script>
+        <script type="text/javascript" src="/static/jquery-1.5.2.js"></script>
+        <script type="text/javascript" src="/static/bootstrap-modal.js"></script>
+        <script type="text/javascript" src="/static/underscore-full.js"></script>
+        <script type="text/javascript" src="/static/backbone-full.js"></script>
+        <script type="text/javascript" src="/static/jquery.autogrowtextarea.js"></script>
+        <script type="text/javascript" src="/static/bootstrap-twipsy.js"></script>
+        <script type="text/javascript" src="/static/summary-view.js"></script>
+        <script type="text/javascript" src="/static/x.js"></script>
+        <script type="text/javascript">
+            $(function() { kw.init(); });
+        </script>
+
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container">
+                    <ul class="nav">
+                        <li><a href="/home"><img src="/static/icons/kobb_cropped_grey_small.png">&nbsp;<img src="/static/icons/kobbweb_130x20.png"/></a></li>
+                    </ul>
+                    <form id="search-form" class="pull-right" action>
+                        <input id="search" type="text" placeholder="search"></input>
+                        <button id="search" type="button" class="btn primary">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+        <div class="content">
+            <div id="app">
+            </div>
+        </div>
+
+    </body>
+</html>

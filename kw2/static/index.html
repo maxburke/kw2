@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns="http://www.w4.org/1999/xhtml">
+    <head>
+        <link href="/static/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="/static/kobbweb.css" media="all" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <script type="text/javascript" src="/static/json2.js"></script>
+        <script type="text/javascript" src="/static/jquery-1.5.2.js"></script>
+        <script type="text/javascript" src="/static/bootstrap-modal.js"></script>
+        <script type="text/javascript" src="/static/login.js"></script>
+        <script type="text/javascript">
+            $(function() { init(); });
+        </script>
+
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container">
+                    <ul class="nav">
+                        <li><a href="/"><img src="/static/icons/kobb_cropped_grey_small.png">&nbsp;<img src="/static/icons/kobbweb_130x20.png"/></a></li>
+                    </ul>
+                    <form id="login-form" class="pull-right" action>
+                        <input id="email" type="text" placeholder="email"></input>
+                        <input id="password" type="password" placeholder="password"></input>
+                        <button id="submit" type="button" class="btn primary">Sign In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="content">
+                <div class="alert-message hidden" id="status">
+                </div>
+                <div class="row">
+                    <div class="span7">
+                        <center><img src="/static/icons/kobb_small.png"/></center>
+                    </div>
+                    <div class="span7">
+                    <h3>Welcome to kobbweb!</h3>
+                    <p/>Keep people in the loop without ever digging through your email archives again!
+                    <p/>Kobbweb is currently in closed beta, but if you're interested in playing around with our 
+                    information sharing service, do request an invite below!
+
+                    <div id="invite-box">
+                    <hr/>
+                        <input type="text" id="invitation" placeholder="email address"/>
+                        <button type="button" class="btn primary" id="invite-submit">Request Invitation</button>
+                    </div>
+                    <!--
+                    <h3>Sign up!</h3>
+                        <form id="join-form">
+                            <fieldset>
+                                <div class="clearfix">
+                                    <label for="email">Email Address</label>
+                                    <div class="input">
+                                        <input class="xlarge" id="join-email" type="text"></input>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix">
+                                    <label for="email">Password</label>
+                                    <div class="input">
+                                        <input class="xlarge" id="join-password" type="password"></input>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix" id="password-verify-input">
+                                    <label>Confirm Password</label>
+                                    <div class="input">
+                                        <input class="xlarge" id="join-password-verify" type="password"></input>
+                                    </div>
+                                </div>
+
+                                <div class="actions">
+                                    <p><button id="join" type="button" class="btn primary">Join!</button></p>
+                                </div>
+                            </fieldset>
+                        </form>
+                    -->
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p>&copy; kobbweb.net</p>
+            </footer>
+        </div>
+    </body>
+</html>
+
