@@ -32,17 +32,23 @@
   (stop *server-instance*))
 
  (setf *server-instance* 
-  (make-instance 'acceptor :port 8000))
+  (make-instance 'easy-acceptor :port 8000))
 
  (start *server-instance*)
 
  (setf *dispatch-table*
   (nconc (list 'dispatch-easy-handlers
-          (create-prefix-dispatcher "/mail" #'mail-handler))))
+          (create-folder-dispatcher-and-handler "/static/" #p"static/")
+          (create-prefix-dispatcher "/mail" #'mail-handler)
+          (create-prefix-dispatcher "/home" #'home-handler)
+          (create-prefix-dispatcher "/join" #'join-handler)
+          (create-prefix-dispatcher "/sessions" #'sessions-handler)
+          (create-prefix-dispatcher "/index" #'index-handler)
+          (create-prefix-dispatcher "/" #'index-handler)
+          'default-dispatcher)))
 ;          (create-folder-dispatcher-and-handler "/static/" #p"static/")
 ;          (create-prefix-dispatcher "/acl" (uri-dispatcher #'acl-handler))
 ;          (create-prefix-dispatcher "/alias" (uri-dispatcher #'alias-handler))
-;          (create-prefix-dispatcher "/sessions" #'sessions-handler)
 ;          (create-prefix-dispatcher "/content" (uri-dispatcher #'content-handler))
 ;          (create-prefix-dispatcher "/item" (uri-dispatcher #'item-handler))
 ;          (create-prefix-dispatcher "/home" #'home-handler)
