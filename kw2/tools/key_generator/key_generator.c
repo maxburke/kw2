@@ -27,7 +27,7 @@ write_lisp_key(const char *generation_time, unsigned char *crypt_key, unsigned c
 
     fprintf(fp, "))\n");
 
-    fprintf(fp, "(defparaneter +kw2-mac-key+ #(");
+    fprintf(fp, "(defparameter +kw2-mac-key+ #(");
 
     for (i = 0; i < key_size; ++i)
     {
