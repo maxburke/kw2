@@ -75,15 +75,23 @@ var submitDelegate = function(e, createNewUser) {
 };
 
 var onLoginSuccess = function(data, status, xhr) {
+    alert("TODO");
+    debugger;
 };
 
 var onLoginFailure = function(xhr, status, error) {
+    alert("TODO");
+    debugger;
 };
 
 var onNewUserSuccess = function(data, status, xhr) {
+    alert("TODO");
+    debugger;
 };
 
 var onNewUserFailure = function(xhr, status, error) {
+    alert("TODO");
+    debugger;
 };
 
 var newUserDelegate = function(e) {
