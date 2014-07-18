@@ -1,93 +1,111 @@
-newMember = false;
+"use strict";
 
-function sessionCreated() {
-    window.location = "/home";
-}
+var spinner = null;
 
-function setLoginStatus(statusCode) {
-    $('#status').text(statusCode).show().addClass("error");
-}
+var submitDelegate = function(e, createNewUser) {
+    $('#login-results').html('');
 
-function sessionCreationError(xhr, textStatus, errorThrown) {
-    if (xhr.status >= 400 && xhr.status < 500) {
-        var response = JSON.parse(xhr.responseText);
-        if (response.success === "false") {
-            setLoginStatus(response.reason);
+    var email = $('#email').val();
+    var password = $('#password').val();
+    var passwordVerify = $('#password-verify').val();
+
+    if (createNewUser) {
+        if (password.length < 6) {
+            $('#login-results').html('<h4>Password must be at least 6 characters long!</h4>');
+            return;
+        } else if (password !== passwordVerify) {
+            $('#login-results').html('<h4>Passwords do not match!</h4>');
+            return;
         }
-    } else if (xhr.status == 500) {
-        window.location = '/500';
     }
-}
 
-function submit(obj) {
-    $('#status').hide();
-
-    var method = 'PUT';
-
-    if (obj.passwordVerify.length !== 0)
-        method = 'POST'
-
-    var submitData = JSON.stringify(obj);
-    var ajaxRequest = {
-        url : '/sessions',
-        type : method,
-        dataType : 'json',
-        data : submitData,
-        processData : false,
-        success : sessionCreated,
-        error : sessionCreationError
+    var spinnerOpts = {
+        lines: 9,
+        length: 7,
+        width: 2,
+        radius: 3,
+        corners: 0.9,
+        rotate: 0,
+        direction: 1,
+        color: '#000',
+        speed: 1.2,
+        trail: 45,
+        shadow: false,
+        hwaccel: false,
+        className: 'spinnerClass',
+        zIndex: 2e9,
+        top: '50%',
+        left:'50%' 
     };
-    $.ajax(ajaxRequest)
-}
 
-function submitOnEnter(e, submitDelegate) {
-    if (e.charCode == 13) {
-        submitDelegate();
-    }
-}
+    spinner = new Spinner(spinnerOpts).spin();
+    $('#action-buttons').hide();
+    $('#spinner-target').append(spinner.el);
 
-function loginDelegate() { 
-    submit({
-        email : $('#email').val(),
-        password : $('#password').val(),
-        passwordVerify : ''
+    var ajaxOptions = {};
+    var data = JSON.stringify({
+        email : email,
+        password : password,
+        passwordVerify : passwordVerify
     });
-}
 
-function joinDelegate() {
-    submit({
-        email : $('#join-email').val(),
-        password : $('#join-password').val(),
-        passwordVerify : $('#join-password-verify').val()
-    });
-}
-
-function inviteDelegate() {
-    var email = $('#invitation').val();
-    if (email.indexOf('@') !== -1) {
-        var submitData = JSON.stringify({ email : email });
-        var ajaxRequest = {
-            url : '/beta',
+    if (createNewUser) {
+        ajaxOptions = {
+            url : '/sessions',
             type : 'POST',
+            data : data,
             dataType : 'json',
-            data : submitData,
             processData : false,
-            success : function() {
-                $('#invite-box').html("<hr/><h3>Thank you for your interest!</h3><p>We'll be in touch!</p>");
-            }
+            success : onNewUserSuccess,
+            error : onNewUserFailure,
         };
-        $.ajax(ajaxRequest)
+    } else {
+        ajaxOptions = {
+            url : '/sessions',
+            type : 'PUT',
+            data : data,
+            dataType : 'json',
+            processData : false,
+            success : onLoginSuccess,
+            error : onLoginFailure,
+        };
     }
-}
 
-function init() {
-    $('#submit').click(loginDelegate);
-    $('#join').click(joinDelegate);
-    $('#login-form').keypress(function(e) { 
-            submitOnEnter(e, loginDelegate); 
-        });
-    $('#join-form').keypress(function(e) { 
-            submitOnEnter(e, joinDelegate); 
-        });
-    $('#invite-submit').click(inviteDelegate);
-}
+    $.ajax(ajaxOptions);
+};
+
+var onLoginSuccess = function(data, status, xhr) {
+};
+
+var onLoginFailure = function(xhr, status, error) {
+};
+
+var onNewUserSuccess = function(data, status, xhr) {
+};
+
+var onNewUserFailure = function(xhr, status, error) {
+};
+
+var newUserDelegate = function(e) {
+    $('#password-verify-input').fadeIn();
+    $('#login').removeClass('primary').addClass('disabled');
+    $('#new').removeClass('danger').addClass('disabled');
+
+    $('#join').fadeIn(400, function() { 
+        $('#login').fadeOut(1000);
+        $('#new').fadeOut(1000);
+    });
+};
+
+var init = function () {
+    $('#password-verify-input').hide();
+    $('#join').hide();
+    $('#login').click(function(e) { 
+        submitDelegate(e, false);
+    });
+    $('#join').click(function(e) { 
+        submitDelegate(e, true);
+    });
+    $('#new').click(newUserDelegate);
+};
+
