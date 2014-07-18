@@ -8,9 +8,9 @@
    (execute
     (:create-table users
      ((user_id :type serial :primary-key t)
-      (email :type text)
-      (password :type text)
-      (display-name :type text)))))
+      (email :type string)
+      (password :type string)
+      (display_name :type (or db-null string))))))
 
   (unless (table-exists-p 'groups)
    (execute
