@@ -19,6 +19,8 @@
        (:file "join")
        (:file "html-helpers")
        (:file "bad-passwords")
+       (:file "groups")
+       (:file "posts")
        (:file "session")
        (:file "mail")
        (:file "create-schema")
