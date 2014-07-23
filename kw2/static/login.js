@@ -1,6 +1,7 @@
 "use strict";
 
 var spinner = null;
+var isNewUser = false;
 
 var submitDelegate = function(e, createNewUser) {
     $('#login-results').html('');
@@ -38,9 +39,14 @@ var submitDelegate = function(e, createNewUser) {
         left:'50%' 
     };
 
-    spinner = new Spinner(spinnerOpts).spin();
     $('#action-buttons').hide();
-    $('#spinner-target').append(spinner.el);
+
+    if (spinner == null) {
+        spinner = new Spinner(spinnerOpts).spin();
+        $('#spinner-target').append(spinner.el);
+    } else {
+        spinner.spin();
+    }
 
     var ajaxOptions = {};
     var data = JSON.stringify({
@@ -75,26 +81,36 @@ var submitDelegate = function(e, createNewUser) {
 };
 
 var onLoginSuccess = function(data, status, xhr) {
-    alert("TODO");
-    debugger;
+    window.location = "/home";
 };
 
 var onLoginFailure = function(xhr, status, error) {
-    alert("TODO");
-    debugger;
+    var responseText = xhr.responseText;
+    var result = JSON.parse(responseText);
+
+    $('#login-results').html('<h4>' + result.reason + '</h4>');
+    $('#action-buttons').show();
+
+    spinner.stop();
 };
 
 var onNewUserSuccess = function(data, status, xhr) {
-    alert("TODO");
-    debugger;
+    window.location = "/home";
 };
 
 var onNewUserFailure = function(xhr, status, error) {
-    alert("TODO");
-    debugger;
+    var responseText = xhr.responseText;
+    var result = JSON.parse(responseText);
+
+    $('#login-results').html('<h4>' + result.reason + '</h4>');
+    $('#action-buttons').show();
+
+    spinner.stop();
 };
 
 var newUserDelegate = function(e) {
+    isNewUser = true;
+
     $('#password-verify-input').fadeIn();
     $('#login').removeClass('primary').addClass('disabled');
     $('#new').removeClass('danger').addClass('disabled');
@@ -113,6 +129,11 @@ var init = function () {
     });
     $('#join').click(function(e) { 
         submitDelegate(e, true);
+    });
+    $('#join-form').keypress(function(e) {
+        if (e.charCode == 13) {
+            submitDelegate(null, isNewUser);
+        }
     });
     $('#new').click(newUserDelegate);
 };

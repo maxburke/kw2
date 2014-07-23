@@ -1,4 +1,8 @@
 (in-package :kw2)
 
 (defun home-handler ()
- "<h1>WELCOME HOME</h1>")
+ (if *session*
+  "<h1>WELCOME HOME!</h1>"
+  (redirect "/")))
+
+

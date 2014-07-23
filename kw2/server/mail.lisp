@@ -1,7 +1,7 @@
 (in-package :kw2)
 
 (defun mail-handle-post ()
- (let* ((content (post-parameter "content")))
+ (let* ((content (post-parameter "data")))
  )
 )
 
