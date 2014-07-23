@@ -1,7 +1,7 @@
 Backlog
 -------
  * As a user of Kobbweb I would like the ability to create a forum.
-   * Users / login (take from KW1?)
+   * Users / login (take from KW1?) [X]
    * The concept behind a forum
  * As a user of Kobbweb I would like to be able to add someone to my forum.
  * As a user of Kobbweb I would like to be able to populate my forum via email.
