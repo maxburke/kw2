@@ -42,7 +42,8 @@
       (headers :type text)
       (body :type text))))
    (execute
-    (:create-index 'posts_by_group :on "posts" :fields 'group_id)
+    (:create-index 'posts_by_group :on "posts" :fields 'group_id))
+   (execute
     (:create-index 'posts_by_message_id :on "posts" :fields 'message_id)))
  )
 )
