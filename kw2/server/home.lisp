@@ -2,7 +2,6 @@
 
 (defun home-handler ()
  (if *session*
-  "<h1>WELCOME HOME!</h1>"
+  (handle-static-file #p"static/home.html")
   (redirect "/")))
-
 
