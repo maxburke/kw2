@@ -16,6 +16,7 @@
    (execute
     (:create-table groups
      ((group_id :type serial :primary-key t)
+      (alias :type text)
       (name :type text)
       (admin :type integer)
       (flags :type integer :default 0)))))
@@ -37,9 +38,11 @@
      ((post_id :type serial :primary-key t)
       (parent_id :type integer)
       (group_id :type integer)
+      (user_id :type integer)
       (message_id :type text)
       (subject :type text)
       (headers :type text)
+      (post_date :type date)
       (body :type text))))
    (execute
     (:create-index 'posts_by_group :on "posts" :fields 'group_id))
