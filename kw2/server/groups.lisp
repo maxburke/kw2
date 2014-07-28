@@ -14,7 +14,7 @@
 ;;; WHERE acl.user_id = '1';
 
 (defprepared-with-names groups-fetch-with-summary (user-id)
- ("SELECT g.group_id, g.name, p.subject, p.post_date, u.display_name
+ ("SELECT g.group_id, g.name, g.alias, p.post_id, p.subject, p.post_date, u.display_name
    FROM groups AS g
        INNER JOIN acl ON g.group_id = acl.group_id
        LEFT JOIN (
@@ -27,9 +27,9 @@
    WHERE acl.user_id = $1" user-id))
   
 (defun groups-fetch (user-id)
- (let* ((groups-with-summary (groups-fetch-with-summary user-id)))
-  (st-json:write-json-to-string groups-with-summary))
-)
+ (with-connection *db-connection-parameters*
+  (let* ((groups-with-summary (groups-fetch-with-summary user-id)))
+   (st-json:write-json-to-string groups-with-summary))))
 
 (defun groups-handler (uri)
  (if *session*
