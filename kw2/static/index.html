@@ -1,63 +1,56 @@
 <!doctype html>
 <html xmlns="http://www.w4.org/1999/xhtml">
     <head>
-        <link href="/static/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="/static/bootstrap/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
         <link href="/static/kobbweb.css" media="all" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <script type="text/javascript" src="/static/json2.js"></script>
-        <script type="text/javascript" src="/static/jquery-1.5.2.js"></script>
-        <script type="text/javascript" src="/static/bootstrap-modal.js"></script>
+        <script type="text/javascript" src="/static/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="/static/spin.min.js"></script>
         <script type="text/javascript" src="/static/login.js"></script>
         <script type="text/javascript">
             $(function() { init(); });
         </script>
 
-        <div class="topbar">
-            <div class="topbar-inner">
-                <div class="container">
-                    <ul class="nav">
-                        <li><a href="/"><img src="/static/icons/kobb_cropped_grey_small.png">&nbsp;<img src="/static/icons/kobbweb_130x20.png"/></a></li>
-                    </ul>
+        <header class="navbar navbar-static-top" role="banner">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="/static/icons/kobb_cropped_grey_small.png"/>&nbsp;<img src="/static/icons/kobbweb_130x20.png"/></a>
                 </div>
-            </div>
-        </div>
+            </nav>
+        </header>
 
         <div class="container">
             <div class="content">
-                <div class="alert-message hidden" id="status">
-                </div>
                 <div class="row">
-                    <div class="span7">
+                    <div class="col-md-5">
                         <center><img src="/static/icons/kobb_small.png"/></center>
                     </div>
-                    <div class="span7">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">
                     <h3>Welcome to kobbweb!</h3>
 
-                    <form id="join-form">
-                        <div class="clearfix">
-                            <input class="xlarge" id="email" type="text" placeholder="email"></input>
+                    <form id="join-form" role="form">
+                        <div class="form-group">
+                            <input class="form-control" id="email" type="text" placeholder="email"></input>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="password" type="password" placeholder="password"></input>
                         </div>
 
-                        <div class="clearfix">
-                            <input class="xlarge" id="password" type="password" placeholder="password"></input>
-                        </div>
-
-                        <div class="clearfix" id="password-verify-input">
-                            <input class="xlarge" id="password-verify" type="password" placeholder="confirm password"/></input>
+                        <div class="form-group" id="password-verify-input">
+                            <input class="form-control" id="password-verify" type="password" placeholder="confirm password"/></input>
                         </div>
 
                         <div id="login-results"></div>
 
-                        <div class="actions">
                             <div id="action-buttons">
-                                <button id="login" type="button" class="btn primary">Login!</button>
-                                <button id="join" type="button" class="btn success">Join!</button>
-                                <button id="new" type="button" class="btn danger">New User!</button>
+                                <button id="login" type="button" class="btn btn-primary">Login!</button>
+                                <button id="join" type="button" class="btn btn-success">Join!</button>
+                                <button id="new" type="button" class="btn btn-danger">New User!</button>
                             </div>
                             <span id="spinner-target" style="position: relative"></span>
-                        </div>
                     </form>
                     <p/>Hosted email distribution lists! Search! Archival! Enterprise! Cloud!
 
