@@ -57,7 +57,7 @@ var onFailureCallback = function(xhr, status, error) {
 
 var init = function() {
     var ajaxOptions = {
-        url : '/groups',
+        url : '/api/groups',
         type : 'GET',
         dataType : 'json',
         success : onSuccessCallback,

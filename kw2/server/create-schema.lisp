@@ -7,7 +7,7 @@
   (unless (table-exists-p 'users)
    (execute
     (:create-table users
-     ((user_id :type serial :primary-key t)
+     ((pk_id :type serial :primary-key t)
       (email :type string)
       (password :type string)
       (display_name :type (or db-null string))))))
@@ -15,7 +15,7 @@
   (unless (table-exists-p 'groups)
    (execute
     (:create-table groups
-     ((group_id :type serial :primary-key t)
+     ((pk_id :type serial :primary-key t)
       (alias :type text)
       (name :type text)
       (admin :type integer)
@@ -24,8 +24,8 @@
   (unless (table-exists-p 'acl)
    (execute
     (:create-table acl
-     ((user_id :type integer)
-      (group_id :type integer)
+     ((fk_user_id :type integer)
+      (fk_group_id :type integer)
       (flags :type integer :default 0))))
    (execute
     (:create-index 'acl_by_user :on "acl" :fields 'user_id))
@@ -35,10 +35,10 @@
   (unless (table-exists-p 'posts)
    (execute
     (:create-table posts
-     ((post_id :type serial :primary-key t)
-      (parent_id :type integer)
-      (group_id :type integer)
-      (user_id :type integer)
+     ((pk_id :type serial :primary-key t)
+      (fk_parent_post_id :type integer)
+      (fk_group_id :type integer)
+      (fk_user_id :type integer)
       (message_id :type text)
       (subject :type text)
       (headers :type text)

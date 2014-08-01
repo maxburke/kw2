@@ -37,4 +37,5 @@
 ; as opposed to the boolean true/false values, because cl-json cannot serialize false, 
 ; only null.
 (defvar *successful-post-response* (json:encode-json-to-string '((:success . "true"))))
+(defvar *unsuccessful-post-response* (json:encode-json-to-string '((:success . "false"))))
 
