@@ -55,7 +55,7 @@
 (defun create-new-user (email password)
  (with-connection *db-connection-parameters*
   (execute (:insert-into 'users :set 'email email 'password (:crypt password (:gen_salt "bf"))))
-  (let* ((rows (query (:select 'user_id :from 'users :where (:= 'email email))))
+  (let* ((rows (query (:select 'pk_id :from 'users :where (:= 'email email))))
          (user-id (caar rows)))
    user-id)
  )
