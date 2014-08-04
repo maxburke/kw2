@@ -36,6 +36,6 @@
 ; a client. It is equivalent to { "success" : "true" }. "true"/"false" is currently used,
 ; as opposed to the boolean true/false values, because cl-json cannot serialize false, 
 ; only null.
-(defvar *successful-post-response* (json:encode-json-to-string '((:success . "true"))))
-(defvar *unsuccessful-post-response* (json:encode-json-to-string '((:success . "false"))))
+(defvar *successful-post-response* (st-json:write-json-to-string (st-json:jso "success" :true)))
+(defvar *unsuccessful-post-response* (st-json:write-json-to-string (st-json:jso "success" :false)))
 

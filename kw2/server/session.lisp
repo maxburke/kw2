@@ -1,7 +1,7 @@
 (in-package :kw2)
     
 (defun create-failure-response (reason)
- (json:encode-json-to-string `((:success . "false") (:reason . ,reason)))
+ (st-json:write-json-to-string (st-json:jso "success" :false "reason" reason))
 )
 
 (defvar *invalid-password-response* (create-failure-response "I don't think that's your password!"))
@@ -10,7 +10,7 @@
  (:select (:= 'password (:crypt '$2 'password)) :from 'users :where (:= '$1 'email)) :single)
 
 (defprepared fetch-user-id
- (:select 'user_id :from 'users :where (:= '$1 'email)) :single)
+ (:select 'pk_id :from 'users :where (:= '$1 'email)) :single)
                                                                                       
 (defun login-and-start-session (email)
  (with-connection *db-connection-parameters*
@@ -22,10 +22,10 @@
  )
 )
 
-(defun extract-login-data (json-string)
- (let* ((email (cdr (assoc :email json-string)))
-        (password (cdr (assoc :password json-string)))
-        (password-verify (cdr (assoc :password-verify json-string))))
+(defun extract-login-data (json-object)
+ (let* ((email (st-json:getjso "email" json-object))
+        (password (st-json:getjso "password" json-object))
+        (password-verify (st-json:getjso "passwordVerify" json-object)))
   (values email password password-verify)
  )
 )
