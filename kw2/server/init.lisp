@@ -40,7 +40,7 @@
   (nconc (list 'dispatch-easy-handlers
           (create-folder-dispatcher-and-handler "/static/" #p"static/")
           (create-prefix-dispatcher "/api/groupvalidate" (uri-dispatcher #'new-group-validation-handler))
-          (create-prefix-dispatcher "/api/groups" (uri-dispatcher #'groups-handler))
+          (create-prefix-dispatcher "/api/groups" #'groups-handler)
           (create-prefix-dispatcher "/mail" #'mail-handler)
           (create-prefix-dispatcher "/groups/new" #'new-group-handler)
           (create-prefix-dispatcher "/groups" #'home-handler)
