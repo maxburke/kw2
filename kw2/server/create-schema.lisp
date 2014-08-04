@@ -28,9 +28,9 @@
       (fk_group_id :type integer)
       (flags :type integer :default 0))))
    (execute
-    (:create-index 'acl_by_user :on "acl" :fields 'user_id))
+    (:create-index 'acl_by_user :on "acl" :fields 'fk_user_id))
    (execute
-    (:create-index 'acl_by_group :on "acl" :fields 'group_id)))
+    (:create-index 'acl_by_group :on "acl" :fields 'fk_group_id)))
 
   (unless (table-exists-p 'posts)
    (execute
@@ -45,7 +45,7 @@
       (post_date :type date)
       (body :type text))))
    (execute
-    (:create-index 'posts_by_group :on "posts" :fields 'group_id))
+    (:create-index 'posts_by_group :on "posts" :fields 'fk_group_id))
    (execute
     (:create-index 'posts_by_message_id :on "posts" :fields 'message_id)))
  )
