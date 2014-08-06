@@ -690,7 +690,7 @@ kw_post_data(struct kw_connection_t *connection)
     curl_global_init(CURL_GLOBAL_ALL);
     curl = curl_easy_init();
     VERIFY(curl != NULL);
-    curl_return_value = curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.110/mail");
+    curl_return_value = curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.103:8000/mail");
     VERIFY(curl_return_value == 0);
     VERIFY(curl_formadd(&first, &last,
             CURLFORM_PTRNAME, "to",
@@ -901,9 +901,9 @@ kw_initialize_ssl_ctx()
     kw_ssl_ctx = SSL_CTX_new(method);
     VERIFY_SSL(kw_ssl_ctx != NULL);
 
-    VERIFY_SSL(SSL_CTX_use_certificate_file(kw_ssl_ctx, "kobbweb_smtp.crt", SSL_FILETYPE_PEM) == 1);
+    VERIFY_SSL(SSL_CTX_use_certificate_file(kw_ssl_ctx, "kw2_smtp.crt", SSL_FILETYPE_PEM) == 1);
     /* TODO: Use a keystore instead of the unencrypted key below. */
-    VERIFY_SSL(SSL_CTX_use_PrivateKey_file(kw_ssl_ctx, "kobbweb_smtp.key", SSL_FILETYPE_PEM) == 1);
+    VERIFY_SSL(SSL_CTX_use_PrivateKey_file(kw_ssl_ctx, "kw2_smtp.key", SSL_FILETYPE_PEM) == 1);
     VERIFY_SSL(SSL_CTX_load_verify_locations(kw_ssl_ctx, NULL, "/usr/lib/ssl/certs"));
     SSL_CTX_set_verify(kw_ssl_ctx, SSL_VERIFY_PEER, NULL);
 }
@@ -944,7 +944,7 @@ main(void)
     memset(&event, 0, sizeof event);
     memset(events, 0, sizeof events);
 
-    openlog("kobbweb_smtp", syslog_flags, LOG_USER);
+    openlog("kw2_smtp", syslog_flags, LOG_USER);
     SSL_library_init();
     kw_initialize_ssl_ctx();
     epoll_fd = epoll_create1(0);
