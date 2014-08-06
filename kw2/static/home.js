@@ -18,9 +18,11 @@ var renderGroupSummary = function(groupSummary) {
     var postSubject = groupSummary[POST_SUBJECT_IDX];
     var postDate = groupSummary[POST_DATE_IDX];
     var postFrom = groupSummary[POST_FROM_IDX];
+    var groupsLink = '/groups/' + groupAlias;
+    var groupsMailLink = 'mailto:' + groupAlias + '@kobbweb.net';
 
-    groupRow.append('<div class="col-md-10"><strong>' + groupName + '</strong></div>')
-        .append('<div class="col-md-2"><a href="mailto:' + groupAlias + '@kobbweb.net' + '">' + groupAlias + '@kobbweb.net</a></div>');
+    groupRow.append('<div class="col-md-10"><a href="' + groupsLink + '"><strong>' + groupName + '</strong></a></div>')
+        .append('<div class="col-md-2"><a href="' + groupsMailLink + '">' + groupAlias + '@kobbweb.net</a></div>');
 
     if (postId != null) {
         debugger;
