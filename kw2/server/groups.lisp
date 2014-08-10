@@ -13,6 +13,11 @@
 ;;;     LEFT JOIN users AS u ON p.user_id = u.user_id
 ;;; WHERE acl.user_id = '1';
 
+(defparameter +group-flag-allow-public-posting+ 1)
+
+(defun group-allows-public-posting (flags)
+ (eq (logand flags +group-flag-allow-public-posting+) +group-flag-allow-public-posting+))
+
 (defprepared-with-names groups-fetch-with-summary (user-id)
  ("SELECT g.pk_id AS group_id, g.name, g.alias, p.pk_id AS post_id, p.subject, p.post_date, u.display_name
    FROM groups AS g
