@@ -18,8 +18,8 @@
 (defun group-allows-public-posting (flags)
  (eq (logand flags +group-flag-allow-public-posting+) +group-flag-allow-public-posting+))
 
-(defprepared-with-names groups-fetch-with-summary (user-id)
- ("SELECT g.pk_id AS group_id, g.name, g.alias, p.pk_id AS post_id, p.subject, p.post_date, u.display_name
+(defprepared-with-names groups-fetch-with-summary-query (user-id)
+ ("SELECT g.pk_id AS group_id, g.name, g.alias, p.pk_id AS post_id, p.subject, p.post_date, CASE WHEN u.display_name IS NULL THEN u.email ELSE u.display_name END AS from
    FROM groups AS g
        INNER JOIN acl ON g.pk_id = acl.fk_group_id
        LEFT JOIN (
@@ -30,6 +30,11 @@
        LEFT JOIN posts AS p ON (recent.post_id = p.pk_id)
        LEFT JOIN users AS u ON p.fk_user_id = u.pk_id
    WHERE acl.fk_user_id = $1" user-id))
+
+(defun groups-fetch-with-summary (user-id)
+ (let ((results (groups-fetch-with-summary-query user-id)))
+  (mapcar (lambda (row) (setf (nth 5 row) (simple-date:timestamp-to-universal-time (nth 5 row)))) results)
+  results))
 
 (defprepared-with-names alias-exists-p (alias)
  ("SELECT pk_id FROM groups WHERE alias = $1" alias))
