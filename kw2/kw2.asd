@@ -5,7 +5,7 @@
 
 (defsystem "kw2"
  :serial t
- :depends-on (:hunchentoot :cl-who :postmodern :st-json :uuid :ironclad :cl-smtp :cl-base64)
+ :depends-on (:hunchentoot :cl-who :postmodern :st-json :uuid :ironclad :cl-smtp :cl-base64 :simple-date)
  :components (
    (:module :server
     :serial t
