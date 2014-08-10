@@ -23,7 +23,7 @@
  ("SELECT flags FROM groups WHERE pk_id = $1" group-id))
 
 (defprepared-with-names mail-get-group-membership-query (group-id user-id)
- ("SELECT fk_user_id, fk_group_id, flags FROM acl WHERE fk_user_id = $1 AND fk_group_id = $2" group-id user-id))
+ ("SELECT fk_group_id, fk_user_id, flags FROM acl WHERE fk_group_id = $1 AND fk_user_id = $2" group-id user-id))
 
 (defprepared-with-names post-insert-new-post (parent group-id user-id message-id subject headers post-date body)
  ("INSERT INTO posts (fk_parent_post_id, fk_group_id, fk_user_id, message_id, subject, headers, post_date, body)
@@ -47,7 +47,8 @@
   flags))
 
 (defun mail-member-of-group-p (group-id user-id)
- (let* ((query-results (mail-get-group-membership-query group-id user-id)))))
+ (let* ((query-results (mail-get-group-membership-query group-id user-id)))
+  query-results))
 
 (defun mail-get-post-id (post-id)
  (if post-id
@@ -116,6 +117,7 @@
     header-fields))
 
 (defun mail-handle-post ()
+ (with-connection *db-connection-parameters*
  (let* ((content (post-parameter "data"))
         (to (post-parameter "to"))
         (from (post-parameter "from"))
@@ -135,9 +137,9 @@
            (references (cdr (assoc :references parsed-header)))
            (subject (cdr (assoc :subject parsed-header)))
            (parent (car (last references)))
-           (parent-id (mail-get-post-id parent))
+           (parent-id (if parent (mail-get-post-id parent) :null))
            (date (simple-date:universal-time-to-timestamp (get-universal-time))))
-     (post-insert-new-post parent-id group-id from-user-id message-id subject header date body))))))
+     (post-insert-new-post parent-id group-id from-user-id message-id subject header date body)))))))
 
 (defun mail-handler ()
  (let ((req (request-method* *request*)))
