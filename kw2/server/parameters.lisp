@@ -15,8 +15,8 @@
 
 ; These three should be *off* for release.
 (setf *show-lisp-errors-p* t)
-(setf *message-log-pathname* #p"/home/max/src/lisp/kw2/logs/message.log")
-(setf *access-log-pathname* #p"/home/max/src/lisp/kw2/logs/access.log")
+(defvar *message-log-pathname* #p"/home/max/src/lisp/kw2/logs/message.log")
+(defvar *access-log-pathname* #p"/home/max/src/lisp/kw2/logs/access.log")
 (defvar *kw2-debug* t)
 
 (if *kw2-debug*
