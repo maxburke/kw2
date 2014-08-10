@@ -8,6 +8,14 @@ var POST_SUBJECT_IDX = 4;
 var POST_DATE_IDX = 5;
 var POST_FROM_IDX = 6;
 
+var zeroPad = function(x) {
+    if (x < 10) {
+        return '0' + x;
+    }
+
+    return '' + x;
+}
+
 var renderGroupSummary = function(groupSummary) {
     var groupRow = $('<div class="row"></div>');
     var summaryRow = $('<div class="row"></div>');
@@ -16,16 +24,20 @@ var renderGroupSummary = function(groupSummary) {
 
     var postId = groupSummary[POST_ID_IDX];
     var postSubject = groupSummary[POST_SUBJECT_IDX];
-    var postDate = groupSummary[POST_DATE_IDX];
+    var unixUtcPostDate = groupSummary[POST_DATE_IDX];
     var postFrom = groupSummary[POST_FROM_IDX];
     var groupsLink = '/groups/' + groupAlias;
     var groupsMailLink = 'mailto:' + groupAlias + '@kobbweb.net';
 
-    groupRow.append('<div class="col-md-10"><a href="' + groupsLink + '"><strong>' + groupName + '</strong></a></div>')
-        .append('<div class="col-md-2"><a href="' + groupsMailLink + '">' + groupAlias + '@kobbweb.net</a></div>');
+    groupRow.append('<div class="col-md-10"><a href="' + groupsLink + '"><strong>' + groupName + '</strong></a></div>');
+    groupRow.append('<div class="col-md-2"><a href="' + groupsMailLink + '">' + groupAlias + '@kobbweb.net</a></div>');
 
     if (postId != null) {
-        debugger;
+        var postDate = new Date(Date.UTC(0, 0, 0, 0, 0, unixUtcPostDate, 0));
+        var postDateString = '' + postDate.getFullYear() + '-' + zeroPad(postDate.getMonth()) + '-' + zeroPad(postDate.getDate()) + ' ' + zeroPad(postDate.getHours()) + ':' + zeroPad(postDate.getMinutes());
+        summaryRow.append('<div class="col-md-8">' + postSubject + '</div>');
+        summaryRow.append('<div class="col-md-2">' + postFrom + '</div>');
+        summaryRow.append('<div class="col-md-2">' + postDateString + '</div>');
     } else {
         summaryRow.append('<div class="col-md-12">No content has been sent to this group!</div>');
     }
