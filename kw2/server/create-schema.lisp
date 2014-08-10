@@ -36,13 +36,13 @@
    (execute
     (:create-table posts
      ((pk_id :type serial :primary-key t)
-      (fk_parent_post_id :type integer)
+      (fk_parent_post_id :type (or db-null integer))
       (fk_group_id :type integer)
       (fk_user_id :type integer)
       (message_id :type text)
       (subject :type text)
       (headers :type text)
-      (post_date :type date)
+      (post_date :type timestamp)
       (body :type text))))
    (execute
     (:create-index 'posts_by_group :on "posts" :fields 'fk_group_id))
