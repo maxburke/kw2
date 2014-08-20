@@ -227,11 +227,28 @@ kw_read(struct kw_connection_t *conn, void *data, size_t size)
 static ssize_t
 kw_write(struct kw_connection_t *conn, const void *data, size_t size)
 {
-    ssize_t rv;
+    size_t bytes_remaining;
+    const char *ptr;
+
+    bytes_remaining = size;
+    ptr = data;
+
+    while (bytes_remaining != 0)
+    {
+        ssize_t rv;
+
+        rv = write(conn->fd, ptr, bytes_remaining);
+
+        if (rv < 0)
+        {
+            return rv;
+        }
+
+        ptr += rv;
+        bytes_remaining -= (size_t)rv;
+    }
     
-    rv = write(conn->fd, data, size);
-    VERIFY(rv == (ssize_t)size);
-    return rv;
+    return (ssize_t)size;
 }
 
 static ssize_t
