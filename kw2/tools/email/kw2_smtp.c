@@ -244,8 +244,10 @@ kw_write(struct kw_connection_t *conn, const void *data, size_t size)
             return rv;
         }
 
-        // In no way should rv ever be greater than bytes_remaining, but 
-        // assert that it is otherwise this will loop forever.
+        /*
+         * In no way should rv ever be greater than bytes_remaining, but 
+         * assert that it is otherwise this will loop forever.
+         */
         VERIFY(rv <= bytes_remaining);
 
         ptr += rv;
