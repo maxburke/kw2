@@ -44,12 +44,12 @@
   (let* ((groups-with-summary (groups-fetch-with-summary user-id)))
    (st-json:write-json-to-string groups-with-summary))))
 
-(defun groups-handler ()
+(defun api-groups-handler ()
  (if *session*
   (groups-fetch (session-value 'id *session*))
   (redirect "/")))
 
-(defun new-group-validation-handler (uri)
+(defun api-group-validate-handler (uri)
  (unless *session*
   (redirect "/"))
 
@@ -64,4 +64,10 @@
   (handle-static-file #p"static/newgroup.html")
   (redirect "/")))
 
-
+(defun groups-handler (params)
+ (let* ((group (second params))
+        (start (third params))
+        (count (fourth params)))
+  (format nil "group: ~d start: ~d count: ~d" group start count)
+ )
+)
