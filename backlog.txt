@@ -4,7 +4,7 @@ Backlog
    * Users / login (take from KW1?) [X]
    * The concept behind a forum
  * As a user of Kobbweb I would like to be able to add someone to my forum.
- * As a user of Kobbweb I would like to be able to populate my forum via email.
+ * As a user of Kobbweb I would like to be able to populate my forum via email. [X]
    * As a user of Kobbweb I would like replies to be properly threaded if possible.
  * As a user of Kobbweb I want emails sent to the list address to be broadcast to all forum members
  * As the owner of Kobbweb I would like billing.
@@ -12,6 +12,6 @@ Backlog
  * As a user of Kobbweb I would like attachments to be archived and be accessed.
  * As a user of Kobbweb I would like to be able to unsubscribe from forums but still be able to access them.
  * As a Kobbweb forum administrator I would like to be able to delete posts or threads.
-
+ * As a user of Kobbweb I would like to be able to integrat chat into my message forums
 
 
