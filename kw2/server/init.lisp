@@ -39,10 +39,11 @@
  (setf *dispatch-table*
   (nconc (list 'dispatch-easy-handlers
           (create-folder-dispatcher-and-handler "/static/" #p"static/")
-          (create-prefix-dispatcher "/api/group/new" #'api-group-new)
-          (create-prefix-dispatcher "/api/group/summary" (uri-dispatcher #'api-group-summary))
-          (create-prefix-dispatcher "/api/group/validate" (uri-dispatcher #'api-group-validate))
-          (create-prefix-dispatcher "/api/group" #'api-groups-handler)
+          (create-prefix-dispatcher "/api/group/new" #'api-group-new-handler)
+          (create-prefix-dispatcher "/api/group/summary" (uri-dispatcher #'api-group-summary-handler))
+          (create-prefix-dispatcher "/api/group/validate" (uri-dispatcher #'api-group-validate-handler))
+          (create-prefix-dispatcher "/api/groups" #'api-groups-handler)
+          (create-prefix-dispatcher "/group" (uri-dispatcher #'group-handler))
           (create-prefix-dispatcher "/mail" #'mail-handler)
           (create-prefix-dispatcher "/home" #'home-handler)
           (create-prefix-dispatcher "/join" #'join-handler)

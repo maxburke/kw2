@@ -26,7 +26,7 @@ var renderGroupSummary = function(groupSummary) {
     var postSubject = groupSummary[POST_SUBJECT_IDX];
     var unixUtcPostDate = groupSummary[POST_DATE_IDX];
     var postFrom = groupSummary[POST_FROM_IDX];
-    var groupsLink = '/api/group/summary/' + groupAlias;
+    var groupsLink = '/group/' + groupAlias;
     var groupsMailLink = 'mailto:' + groupAlias + '@kobbweb.net';
 
     groupRow.append('<div class="col-md-10"><a href="' + groupsLink + '"><strong>' + groupName + '</strong></a></div>');
@@ -71,7 +71,7 @@ var onFailureCallback = function(xhr, status, error) {
 
 var init = function() {
     var ajaxOptions = {
-        url : '/api/group',
+        url : '/api/groups',
         type : 'GET',
         dataType : 'json',
         success : onSuccessCallback,
