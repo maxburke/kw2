@@ -40,6 +40,7 @@
       (fk_group_id :type integer)
       (fk_user_id :type integer)
       (message_id :type text)
+      (post_from :type text :default "unknown")
       (subject :type text)
       (headers :type text)
       (post_date :type timestamp)

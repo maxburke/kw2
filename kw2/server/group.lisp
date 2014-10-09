@@ -6,7 +6,8 @@
   (redirect "/")))
 
 (defprepared-with-names group-fetch-summaries-query (user-id group-name start count)
- ("SELECT posts.pk_id, posts.fk_parent_post_id, posts.message_id, posts.subject, posts.post_date
+ ; TODO: Grab number of thread replies and most recent post information as well
+ ("SELECT posts.pk_id, posts.fk_parent_post_id, posts.message_id, posts.post_from, posts.subject, posts.post_date
    FROM posts
        INNER JOIN groups ON posts.fk_group_id = groups.pk_id
        INNER JOIN acl ON (acl.fk_user_id = $1 AND acl.fk_group_id = groups.pk_id)
@@ -18,7 +19,7 @@
  (with-connection *db-connection-parameters*
   (let ((results (group-fetch-summaries-query user-id group-name start count)))
    (mapcar (lambda (row)
-            (setf (nth 4 row) (simple-date:timestamp-to-universal-time (nth 4 row))))
+            (setf (nth 5 row) (simple-date:timestamp-to-universal-time (nth 5 row))))
     results)
    results)
  )
