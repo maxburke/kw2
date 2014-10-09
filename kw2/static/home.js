@@ -8,14 +8,6 @@ var POST_SUBJECT_IDX = 4;
 var POST_DATE_IDX = 5;
 var POST_FROM_IDX = 6;
 
-var zeroPad = function(x) {
-    if (x < 10) {
-        return '0' + x;
-    }
-
-    return '' + x;
-}
-
 var renderGroupSummary = function(groupSummary) {
     var groupRow = $('<div class="row"></div>');
     var summaryRow = $('<div class="row"></div>');
@@ -33,8 +25,9 @@ var renderGroupSummary = function(groupSummary) {
     groupRow.append('<div class="col-md-2"><a href="' + groupsMailLink + '">' + groupAlias + '@kobbweb.net</a></div>');
 
     if (postId != null) {
-        var postDate = new Date(Date.UTC(0, 0, 0, 0, 0, unixUtcPostDate, 0));
-        var postDateString = '' + postDate.getFullYear() + '-' + zeroPad(postDate.getMonth()) + '-' + zeroPad(postDate.getDate()) + ' ' + zeroPad(postDate.getHours()) + ':' + zeroPad(postDate.getMinutes());
+        var postDate = dateFromUnixUtc(unixUtcPostDate);
+        var postDateString = formatDateString(postDate);
+
         summaryRow.append('<div class="col-md-8">' + postSubject + '</div>');
         summaryRow.append('<div class="col-md-2">' + postFrom + '</div>');
         summaryRow.append('<div class="col-md-2">' + postDateString + '</div>');
@@ -49,12 +42,12 @@ var onSuccessCallback = function(data, status, xhr) {
     var groupsSummaries = data;
 
     groupsSummaries.sort(function(a, b) {
-        var name1 = a[1];
-        var name2 = b[1];
+        var name1 = a[GROUP_NAME_IDX];
+        var name2 = b[GROUP_NAME_IDX];
         return name1.localeCompare(name2);
     });
 
-    var el = $('<div class="container">');
+    var el = $('<div class="container"></div>');
 
     for (var i = 0; i < groupsSummaries.length; ++i) {
         var groupSummary = groupsSummaries[i];
@@ -67,6 +60,7 @@ var onSuccessCallback = function(data, status, xhr) {
 };
 
 var onFailureCallback = function(xhr, status, error) {
+    // TODO: implement.
 };
 
 var init = function() {
