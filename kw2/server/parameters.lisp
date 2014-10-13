@@ -39,3 +39,7 @@
 (defvar *successful-post-response* (st-json:write-json-to-string (st-json:jso "success" :true)))
 (defvar *unsuccessful-post-response* (st-json:write-json-to-string (st-json:jso "success" :false)))
 
+; Handy debugging macro for printing parameter names and values
+(defmacro debug-log (x) `(format t "~d: ~d~%" (symbol-name (quote ,x)) ,x))
+
+

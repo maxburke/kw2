@@ -116,8 +116,6 @@
               (incf start-idx))))
     header-fields))
 
-(defmacro debug-log (x) `(format t "~d: ~d~%" (symbol-name (quote ,x)) ,x))
-
 (defun mail-handle-post ()
  (with-connection *db-connection-parameters*
  (let* ((content (post-parameter "data"))
