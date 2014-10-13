@@ -116,6 +116,8 @@
               (incf start-idx))))
     header-fields))
 
+(defmacro debug-log (x) `(format t "~d: ~d~%" (symbol-name (quote ,x)) ,x))
+
 (defun mail-handle-post ()
  (with-connection *db-connection-parameters*
  (let* ((content (post-parameter "data"))
@@ -123,6 +125,7 @@
         (from (post-parameter "from"))
         (group-id (mail-get-group-id to))
         (from-user-id (mail-get-from-user-id from)))
+
   (unless group-id
    (return-from mail-handle-post nil))
 
@@ -140,7 +143,8 @@
            (parent (car (last references)))
            (parent-id (if parent (mail-get-post-id parent) :null))
            (date (simple-date:universal-time-to-timestamp (get-universal-time))))
-     (post-insert-new-post parent-id group-id from-user-id message-id from subject header date body)))))))
+     (post-insert-new-post parent-id group-id from-user-id message-id from subject header date body)
+     *successful-post-response*))))))
 
 (defun mail-handler ()
  (let ((req (request-method* *request*)))
