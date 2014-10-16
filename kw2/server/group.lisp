@@ -7,16 +7,16 @@
 
 (defprepared-with-names group-fetch-summaries-query (user-id group-name start count)
  ; TODO: Grab number of thread replies and most recent post information as well
- ; 
- ; WITH RECURSIVE post_hierarchy(pk_id, parent_id, has_replies) AS (
- ;         SELECT pk_id, fk_parent_post_id, 0
+ ;
+ ; WITH RECURSIVE post_hierarchy(pk_id, parent_id, post_date, has_replies) AS (
+ ;         SELECT pk_id, fk_parent_post_id, post_date, 0
  ;         FROM posts
  ;     UNION ALL
- ;         SELECT p.pk_id, p.fk_parent_post_id, 1
+ ;         SELECT p.pk_id, p.fk_parent_post_id, ph.post_date, 1
  ;         FROM posts p, post_hierarchy ph
  ;         WHERE p.pk_id = ph.parent_id
  ;     )
- ; SELECT pk_id, sum(has_replies) FROM post_hierarchy WHERE parent_id IS NULL GROUP BY pk_id;
+ ; SELECT pk_id, max(post_date), sum(has_replies) FROM post_hierarchy WHERE parent_id IS NULL GROUP BY pk_id;
  ;
  ;
  ("SELECT posts.pk_id, posts.fk_parent_post_id, posts.message_id, posts.post_from, posts.subject, posts.post_date
