@@ -35,7 +35,12 @@
  (with-connection *db-connection-parameters*
   (let ((results (groups-fetch-with-summary-query user-id)))
    (mapcar (lambda (row)
-            (setf (nth 5 row) (simple-date:timestamp-to-universal-time (nth 5 row))))
+            (let* ((timestamp (nth 5 row))
+                   (universal-time (simple-date:timestamp-to-universal-time timestamp))
+                   (hours (floor (/ universal-time 3600)))
+                   (mins (floor (/ (- universal-time (* hours 3600)) 60)))
+                   (secs (floor (- universal-time (* hours 3600) (* mins 60)))))
+            (setf (nth 5 row) (list hours mins secs))))
     results)
    results)))
 

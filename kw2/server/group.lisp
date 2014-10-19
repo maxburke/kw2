@@ -19,8 +19,21 @@
  ; SELECT pk_id, max(post_date), sum(has_replies) FROM post_hierarchy WHERE parent_id IS NULL GROUP BY pk_id;
  ;
  ;
- ("SELECT posts.pk_id, posts.fk_parent_post_id, posts.message_id, posts.post_from, posts.subject, posts.post_date
+ ("SELECT posts.pk_id, posts.fk_parent_post_id, posts.message_id, posts.post_from, posts.subject, ph.most_recent_date, ph.num_replies
    FROM posts
+       INNER JOIN (
+           WITH RECURSIVE post_hierarchy(pk_id, parent_id, post_date, has_replies) AS (
+                   SELECT pk_id, fk_parent_post_id, post_date, 0
+                   FROM posts
+               UNION ALL
+                   SELECT p.pk_id, p.fk_parent_post_id, ph.post_date, 1
+                   FROM posts p, post_hierarchy ph
+                   WHERE p.pk_id = ph.parent_id
+               )
+           SELECT pk_id, MAX(post_date) AS most_recent_date, SUM(has_replies) AS num_replies
+           FROM post_hierarchy
+           WHERE parent_id IS NULL GROUP BY pk_id
+       ) AS ph ON ph.pk_id = posts.pk_id
        INNER JOIN groups ON posts.fk_group_id = groups.pk_id
        INNER JOIN acl ON (acl.fk_user_id = $1 AND acl.fk_group_id = groups.pk_id)
        WHERE groups.alias = $2
@@ -31,7 +44,12 @@
  (with-connection *db-connection-parameters*
   (let ((results (group-fetch-summaries-query user-id group-name start count)))
    (mapcar (lambda (row)
-            (setf (nth 5 row) (simple-date:timestamp-to-universal-time (nth 5 row))))
+            (let* ((timestamp (nth 5 row))
+                   (universal-time (simple-date:timestamp-to-universal-time timestamp))
+                   (hours (floor (/ universal-time 3600)))
+                   (mins (floor (/ (- universal-time (* hours 3600)) 60)))
+                   (secs (floor (- universal-time (* hours 3600) (* mins 60)))))
+            (setf (nth 5 row) (list hours mins secs))))
     results)
    results)
  )

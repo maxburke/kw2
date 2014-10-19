@@ -6,6 +6,7 @@ var MESSAGE_ID_IDX = 2;
 var FROM_IDX = 3;
 var SUBJECT_IDX = 4;
 var DATE_IDX = 5;
+var NUM_REPLIES_IDX = 6;
 
 var extractGroupFromUri = function() {
     var uri = window.location.pathname;
@@ -42,7 +43,7 @@ var renderPostSummary = function(postSummary) {
     var date = dateFromUnixUtc(unixUtcPostDate);
     var formattedDate = formatDateString(date);
 
-    var numReplies = 0;
+    var numReplies = postSummary[NUM_REPLIES_IDX];
     var lastPostInfo = formattedDate + ' by unknown';
 
     postRow.append('<div class="col-md-6">' + subject + '</div>');

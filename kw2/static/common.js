@@ -1,7 +1,11 @@
 "use strict";
 
 var dateFromUnixUtc = function(unixTimestamp) {
-    return new Date(Date.UTC(0, 0, 0, 0, 0, unixTimestamp, 0));
+    var hours = unixTimestamp[0];
+    var mins = unixTimestamp[1];
+    var seconds = unixTimestamp[2];
+
+    return new Date(Date.UTC(0, 0, 1, hours, mins, seconds, 0));
 };
 
 var zeroPad = function(x) {
@@ -13,6 +17,7 @@ var zeroPad = function(x) {
 };
 
 var formatDateString = function(date) {
-    return '' + date.getFullYear() + '-' + zeroPad(date.getMonth()) + '-' + zeroPad(date.getDate()) + ' ' + zeroPad(date.getHours()) + ':' + zeroPad(date.getMinutes());
+    var month = date.getMonth() + 1;
+    return '' + date.getFullYear() + '-' + zeroPad(month) + '-' + zeroPad(date.getDate()) + ' ' + zeroPad(date.getHours()) + ':' + zeroPad(date.getMinutes());
 };
 
